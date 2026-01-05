@@ -11,14 +11,22 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    screens: {
+                        '3xl': '1920px', /* Custom breakpoint for large screens */
+                        '4xl': '2560px',
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
                     },
                     colors: {
                         emerald: {
-                            450: '#10b981', // Custom emerald shade
+                            450: '#10b981', 
                         }
+                    },
+                    maxWidth: {
+                        '8xl': '1440px',
+                        '9xl': '1800px',
                     }
                 }
             }
@@ -40,7 +48,7 @@
             background-color: #050505;
             overflow-x: hidden;
             color: #f5f5f5;
-            cursor: none; /* Custom cursor handling */
+            cursor: none;
         }
 
         /* Custom Cursor */
@@ -65,7 +73,6 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
-        /* Hover state for cursor */
         body.hovering .cursor-outline {
             width: 60px;
             height: 60px;
@@ -74,11 +81,17 @@
             backdrop-filter: blur(2px);
         }
 
-        /* Custom utilities for the parallax effect */
+        /* Parallax & Wrapper */
+        .parallax-wrapper {
+            /* Will be controlled by JS for resizing */
+            transform-origin: center center;
+            will-change: transform;
+        }
+
         .parallax-layer {
             position: absolute;
             pointer-events: none;
-            transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: transform 0.2s linear; /* Slightly faster for snappier feel */
             transform-style: preserve-3d;
             will-change: transform;
         }
@@ -137,7 +150,6 @@
             color: black;
         }
 
-        /* Glassmorphism Utilities */
         .glass-panel {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -145,7 +157,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Hide scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -163,7 +174,7 @@
 </head>
 <body class="antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
 
-    <!-- Custom Cursor Elements -->
+    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
@@ -187,7 +198,6 @@
         <div class="pointer-events-auto cursor-pointer interactable">
             <span class="font-bold tracking-tighter text-xl">HILLS.</span>
         </div>
-        <!-- FIXED: Updated hrefs to point to section IDs -->
         <div class="pointer-events-auto flex gap-8 text-xs font-medium tracking-widest uppercase opacity-80 bg-black/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/5">
             <a href="#expeditions" class="hover:text-emerald-400 transition-colors hidden md:block interactable">Expeditions</a>
             <a href="#journal" class="hover:text-emerald-400 transition-colors hidden md:block interactable">Journal</a>
@@ -196,28 +206,24 @@
         </div>
     </nav>
 
-    <!-- Main Content Wrapper (Hidden initially) -->
+    <!-- Main Content Wrapper -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000">
         
         <!-- Parallax Hero Section -->
         <main id="hero-container" class="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-[#101010] to-[#2b2b2b]">
-            <!-- Vignette Overlay -->
             <div class="absolute inset-0 z-[100] pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_50%,rgba(0,0,0,0.8))]"></div>
 
-            <!-- Zoom Wrapper (scale-110) -->
-            <div class="relative w-full h-full scale-110 origin-center pointer-events-none parallax-wrapper">
-                <!-- Layers will be injected here by JS -->
+            <!-- Parallax Wrapper: Scales dynamically via JS for large screens -->
+            <div class="relative w-full h-full origin-center pointer-events-none parallax-wrapper">
                 <div id="layers-container"></div>
-
-                <!-- Text Layer -->
                 <div id="hero-text" class="absolute z-[9] text-white text-center pointer-events-auto transition-transform duration-[450ms] ease-out" style="top: calc(50% - 130px); left: 50%; transform: translate(-50%, -50%);">
-                    <h1 class="font-black text-[5rem] md:text-[12rem] lg:text-[22rem] leading-[0.8] tracking-tighter text-shadow-xl drop-shadow-2xl opacity-90 font-sans">
+                    <!-- Responsive text sizing for hero -->
+                    <h1 class="font-black text-[5rem] md:text-[12rem] lg:text-[15rem] xl:text-[20rem] 3xl:text-[26rem] leading-[0.8] tracking-tighter text-shadow-xl drop-shadow-2xl opacity-90 font-sans whitespace-nowrap">
                         HILLS
                     </h1>
                 </div>
             </div>
             
-            <!-- Scroll Indicator -->
             <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-[120] flex flex-col items-center gap-2 opacity-60 animate-bounce">
                 <span class="text-[10px] uppercase tracking-[0.2em]">Begin Ascent</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-80"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
@@ -226,22 +232,21 @@
 
         <!-- Content Section -->
         <div class="relative z-[20] bg-[#050505] text-white">
-            <!-- Gradient transition from Hero -->
             <div class="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-transparent to-[#050505] -mt-64 pointer-events-none"></div>
     
             <!-- Introduction (ABOUT) -->
-            <!-- FIXED: Added id="about" and scroll-mt-32 to handle sticky nav offset -->
-            <section id="about" class="relative py-32 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-32">
+            <!-- Updated max-w for large screens -->
+            <section id="about" class="relative py-32 px-6 md:px-12 max-w-7xl 3xl:max-w-9xl mx-auto scroll-mt-32">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
                     <div class="space-y-10 reveal-on-scroll">
                         <div class="flex items-center gap-4 text-emerald-500/80">
                             <div class="w-16 h-[1px] bg-emerald-500/50"></div>
                             <span class="text-xs uppercase tracking-[0.2em] font-medium">Discover the peaks</span>
                         </div>
-                        <h2 class="font-serif text-5xl md:text-7xl font-medium tracking-tight text-white leading-[1.05]">
+                        <h2 class="font-serif text-5xl md:text-7xl 3xl:text-8xl font-medium tracking-tight text-white leading-[1.05]">
                             Beyond the <br /> <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-200 to-emerald-500/50 italic">Horizon</span>
                         </h2>
-                        <p class="text-lg text-neutral-400 leading-relaxed max-w-md font-light font-sans">
+                        <p class="text-lg 3xl:text-xl text-neutral-400 leading-relaxed max-w-md font-light font-sans">
                             The hills are not silent; they whisper ancient stories to those who listen. 
                             We curate expeditions for the bold, the curious, and the restless souls seeking altitude.
                         </p>
@@ -255,7 +260,8 @@
                     
                     <div class="relative reveal-on-scroll" style="transition-delay: 200ms;">
                         <div class="absolute -inset-4 border border-white/5 rounded-2xl z-0 transform rotate-2"></div>
-                        <div class="relative z-10 rounded-xl overflow-hidden h-[600px] bg-neutral-900 group shadow-2xl shadow-black">
+                        <!-- Increased height for large screens -->
+                        <div class="relative z-10 rounded-xl overflow-hidden h-[600px] 3xl:h-[800px] bg-neutral-900 group shadow-2xl shadow-black">
                             <img 
                                 src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop" 
                                 alt="Mountains"
@@ -274,28 +280,28 @@
     
             <!-- Philosophy / Process Section -->
             <section class="py-32 px-6 md:px-12 border-t border-white/5 relative">
-                <div class="max-w-7xl mx-auto">
-                    <h3 class="font-serif text-3xl md:text-5xl text-center mb-24 reveal-on-scroll">The Philosophy of Ascent</h3>
+                <div class="max-w-7xl 3xl:max-w-9xl mx-auto">
+                    <h3 class="font-serif text-3xl md:text-5xl 3xl:text-6xl text-center mb-24 reveal-on-scroll">The Philosophy of Ascent</h3>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24">
                         <div class="space-y-6 reveal-on-scroll" style="transition-delay: 100ms;">
-                            <span class="text-emerald-500 font-serif italic text-4xl">01.</span>
-                            <h4 class="text-xl font-bold uppercase tracking-widest">Respect Nature</h4>
-                            <p class="text-neutral-500 leading-relaxed font-light">
+                            <span class="text-emerald-500 font-serif italic text-4xl 3xl:text-5xl">01.</span>
+                            <h4 class="text-xl 3xl:text-2xl font-bold uppercase tracking-widest">Respect Nature</h4>
+                            <p class="text-neutral-500 leading-relaxed font-light 3xl:text-lg">
                                 We leave no trace. The mountain allows us to pass; we are merely visitors in a timeless landscape.
                             </p>
                         </div>
                         <div class="space-y-6 reveal-on-scroll" style="transition-delay: 200ms;">
-                            <span class="text-emerald-500 font-serif italic text-4xl">02.</span>
-                            <h4 class="text-xl font-bold uppercase tracking-widest">Trust the Rope</h4>
-                            <p class="text-neutral-500 leading-relaxed font-light">
+                            <span class="text-emerald-500 font-serif italic text-4xl 3xl:text-5xl">02.</span>
+                            <h4 class="text-xl 3xl:text-2xl font-bold uppercase tracking-widest">Trust the Rope</h4>
+                            <p class="text-neutral-500 leading-relaxed font-light 3xl:text-lg">
                                 A bond forged in danger is unbreakable. Our guides are world-class alpinists dedicated to your safety.
                             </p>
                         </div>
                         <div class="space-y-6 reveal-on-scroll" style="transition-delay: 300ms;">
-                            <span class="text-emerald-500 font-serif italic text-4xl">03.</span>
-                            <h4 class="text-xl font-bold uppercase tracking-widest">Seek Silence</h4>
-                            <p class="text-neutral-500 leading-relaxed font-light">
+                            <span class="text-emerald-500 font-serif italic text-4xl 3xl:text-5xl">03.</span>
+                            <h4 class="text-xl 3xl:text-2xl font-bold uppercase tracking-widest">Seek Silence</h4>
+                            <p class="text-neutral-500 leading-relaxed font-light 3xl:text-lg">
                                 In the void of the high peaks, we find clarity. Disconnect from the noise to reconnect with yourself.
                             </p>
                         </div>
@@ -305,28 +311,27 @@
 
             <!-- Bento Grid Stats -->
             <section class="py-32 bg-[#080808] relative overflow-hidden">
-                <!-- Background subtle glow -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-900/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-                <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+                <div class="max-w-7xl 3xl:max-w-9xl mx-auto px-6 md:px-12 relative z-10">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
                         <div class="text-center md:text-left space-y-3 reveal-on-scroll">
-                            <p class="font-serif text-5xl md:text-7xl italic text-white/90">4,810m</p>
+                            <p class="font-serif text-5xl md:text-7xl 3xl:text-9xl italic text-white/90">4,810m</p>
                             <div class="h-[1px] w-8 bg-emerald-500/50 mx-auto md:mx-0"></div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">Max Elevation</p>
                         </div>
                         <div class="text-center md:text-left space-y-3 reveal-on-scroll" style="transition-delay: 100ms;">
-                            <p class="font-serif text-5xl md:text-7xl italic text-white/90">142+</p>
+                            <p class="font-serif text-5xl md:text-7xl 3xl:text-9xl italic text-white/90">142+</p>
                             <div class="h-[1px] w-8 bg-emerald-500/50 mx-auto md:mx-0"></div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">Routes</p>
                         </div>
                         <div class="text-center md:text-left space-y-3 reveal-on-scroll" style="transition-delay: 200ms;">
-                            <p class="font-serif text-5xl md:text-7xl italic text-white/90">50+</p>
+                            <p class="font-serif text-5xl md:text-7xl 3xl:text-9xl italic text-white/90">50+</p>
                             <div class="h-[1px] w-8 bg-emerald-500/50 mx-auto md:mx-0"></div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">Expert Guides</p>
                         </div>
                         <div class="text-center md:text-left space-y-3 reveal-on-scroll" style="transition-delay: 300ms;">
-                            <p class="font-serif text-5xl md:text-7xl italic text-white/90">2k+</p>
+                            <p class="font-serif text-5xl md:text-7xl 3xl:text-9xl italic text-white/90">2k+</p>
                             <div class="h-[1px] w-8 bg-emerald-500/50 mx-auto md:mx-0"></div>
                             <p class="text-[10px] uppercase tracking-[0.2em] text-neutral-500 font-bold">Expeditions</p>
                         </div>
@@ -335,8 +340,7 @@
             </section>
     
             <!-- Gallery Grid (EXPEDITIONS) -->
-            <!-- FIXED: Added id="expeditions" and scroll-mt-32 -->
-            <section id="expeditions" class="py-32 max-w-7xl mx-auto px-6 md:px-12 scroll-mt-32">
+            <section id="expeditions" class="py-32 max-w-7xl 3xl:max-w-9xl mx-auto px-6 md:px-12 scroll-mt-32">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 reveal-on-scroll">
                     <div>
                         <h3 class="font-serif text-4xl md:text-6xl text-white mb-4">Selected Expeditions</h3>
@@ -348,7 +352,8 @@
                     </a>
                 </div>
     
-                <div class="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4 md:h-[800px] h-auto">
+                <!-- Responsive Grid Heights -->
+                <div class="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4 md:h-[800px] 3xl:h-[1000px] h-auto">
                     <!-- Large Item -->
                     <div class="md:col-span-2 md:row-span-2 h-[400px] md:h-auto relative group overflow-hidden rounded-lg bg-neutral-900 reveal-on-scroll interactable">
                         <img 
@@ -396,9 +401,8 @@
             </section>
 
             <!-- Journal Section (JOURNAL) -->
-            <!-- FIXED: Added id="journal" and scroll-mt-32 -->
             <section id="journal" class="py-32 px-6 md:px-12 bg-[#080808] border-t border-white/5 scroll-mt-32">
-                <div class="max-w-7xl mx-auto">
+                <div class="max-w-7xl 3xl:max-w-9xl mx-auto">
                     <div class="flex justify-between items-end mb-24 reveal-on-scroll">
                         <h3 class="font-serif text-4xl md:text-5xl text-white">From The Journal</h3>
                         <p class="text-neutral-500 text-sm tracking-widest uppercase hidden md:block">Stories from the summit</p>
@@ -408,12 +412,12 @@
                         <!-- Journal Item 1 -->
                         <div class="group flex flex-col md:flex-row gap-8 md:gap-16 items-center reveal-on-scroll interactable">
                             <div class="w-full md:w-1/2 overflow-hidden rounded-lg">
-                                <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2026&auto=format&fit=crop" alt="Skiing" class="w-full h-[300px] object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                                <img src="https://images.unsplash.com/photo-1551524559-8af4e6624178?q=80&w=2026&auto=format&fit=crop" alt="Skiing" class="w-full h-[300px] 3xl:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100 grayscale group-hover:grayscale-0">
                             </div>
                             <div class="w-full md:w-1/2 space-y-4">
                                 <span class="text-emerald-500 text-xs tracking-widest uppercase">Dec 12, 2024</span>
                                 <h4 class="font-serif text-3xl md:text-4xl text-white group-hover:underline decoration-1 underline-offset-8">The Sound of Snow</h4>
-                                <p class="text-neutral-400 font-light leading-relaxed max-w-md">
+                                <p class="text-neutral-400 font-light leading-relaxed max-w-md 3xl:max-w-lg 3xl:text-lg">
                                     There is a specific frequency of silence that only exists above 3,000 meters. We took a team of audio engineers to capture it.
                                 </p>
                                 <a href="#" class="text-xs uppercase tracking-widest text-white mt-4 inline-block">Read Article</a>
@@ -423,12 +427,12 @@
                         <!-- Journal Item 2 -->
                         <div class="group flex flex-col md:flex-row-reverse gap-8 md:gap-16 items-center reveal-on-scroll interactable">
                             <div class="w-full md:w-1/2 overflow-hidden rounded-lg">
-                                <img src="https://images.unsplash.com/photo-1520209759809-a93f90f8f97e?q=80&w=2069&auto=format&fit=crop" alt="Campfire" class="w-full h-[300px] object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100 grayscale group-hover:grayscale-0">
+                                <img src="https://images.unsplash.com/photo-1520209759809-a93f90f8f97e?q=80&w=2069&auto=format&fit=crop" alt="Campfire" class="w-full h-[300px] 3xl:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100 grayscale group-hover:grayscale-0">
                             </div>
                             <div class="w-full md:w-1/2 space-y-4 md:text-right">
                                 <span class="text-emerald-500 text-xs tracking-widest uppercase">Nov 04, 2024</span>
                                 <h4 class="font-serif text-3xl md:text-4xl text-white group-hover:underline decoration-1 underline-offset-8">Midnight Sun</h4>
-                                <p class="text-neutral-400 font-light leading-relaxed max-w-md ml-auto">
+                                <p class="text-neutral-400 font-light leading-relaxed max-w-md 3xl:max-w-lg ml-auto 3xl:text-lg">
                                     Surviving the endless day in Norway's Lofoten Islands. A photographer's guide to light that never dies.
                                 </p>
                                 <a href="#" class="text-xs uppercase tracking-widest text-white mt-4 inline-block">Read Article</a>
@@ -500,6 +504,7 @@
         const textRef = document.getElementById('hero-text');
         const preloader = document.getElementById('preloader');
         const mainContent = document.getElementById('main-content');
+        const parallaxWrapper = document.querySelector('.parallax-wrapper');
         
         // Cursor Elements
         const cursorDot = document.querySelector('.cursor-dot');
@@ -536,12 +541,35 @@
             // Add Event Listeners
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mousemove', handleCursorMove);
+            window.addEventListener('resize', handleResize); // Large screen scaling
             
+            // Initial call to set scale
+            handleResize();
+
             // Setup Intersection Observer for Scroll Animations
             setupScrollReveal();
 
             // Setup Hover Interactions for Cursor
             setupCursorInteractions();
+        }
+
+        // --- Large Screen Resizing Logic ---
+        function handleResize() {
+            const width = window.innerWidth;
+            const wrapper = document.querySelector('.parallax-wrapper');
+            
+            // Standard design width is approx 1600px - 1920px. 
+            // If the screen is wider (e.g., 4k is 3840px), we scale up.
+            const baseScale = 1.1; // Default zoom
+            const breakpoint = 1800; // Point where we start scaling up
+            
+            let scale = baseScale;
+            if (width > breakpoint) {
+                // Calculate scale factor. E.g., if width is 3600, scale is ~2.2
+                scale = (width / breakpoint) * baseScale;
+            }
+            
+            wrapper.style.transform = `scale(${scale})`;
         }
 
         // --- Cursor Logic ---
