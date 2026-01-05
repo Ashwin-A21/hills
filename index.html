@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HILLS | Expedition</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #101010;
+            overflow-x: hidden;
+        }
+        /* Custom utilities for the parallax effect */
+        .parallax-layer {
+            position: absolute;
+            pointer-events: none;
+            transition: transform 0.45s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+        
+        .text-shadow-xl {
+            text-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101010; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+    </style>
+</head>
+<body class="bg-[#101010] text-white">
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#101010] transition-opacity duration-1000 ease-in-out">
+        <div class="relative">
+            <div class="w-16 h-16 border-4 border-t-white border-white/20 rounded-full animate-spin"></div>
+        </div>
+        <p class="mt-4 text-white/50 text-sm tracking-[0.2em] font-light animate-pulse">
+            LOADING ASSETS
+        </p>
+    </div>
+
+    <!-- Main Content Wrapper (Hidden initially) -->
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+        
+        <!-- Parallax Hero Section -->
+        <main id="hero-container" class="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-[#101010] to-[#2b2b2b]">
+            <!-- Vignette Overlay -->
+            <div class="absolute inset-0 z-[100] pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_65%,rgba(0,0,0,0.7))]"></div>
+
+            <!-- Zoom Wrapper (scale-110) -->
+            <div class="relative w-full h-full scale-110 origin-center pointer-events-none parallax-wrapper">
+                <!-- Layers will be injected here by JS -->
+                <div id="layers-container"></div>
+
+                <!-- Text Layer -->
+                <div id="hero-text" class="absolute z-[9] text-white text-center pointer-events-auto transition-transform duration-[450ms] ease-out" style="top: calc(50% - 130px); left: 50%; transform: translate(-50%, -50%);">
+                    <h1 class="font-black text-[5rem] md:text-[12rem] lg:text-[20rem] leading-[0.8] tracking-tighter text-shadow-xl drop-shadow-2xl">
+                        HILLS
+                    </h1>
+                </div>
+            </div>
+        </main>
+
+        <!-- Content Section -->
+        <div class="relative z-[20] bg-[#0a0a0a] text-white">
+            <!-- Gradient transition from Hero -->
+            <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-[#0a0a0a] -mt-32 pointer-events-none"></div>
+    
+            <!-- Introduction -->
+            <section class="relative py-32 px-6 md:px-12 max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div class="flex items-center gap-4 text-emerald-500/80">
+                            <div class="w-12 h-[1px] bg-emerald-500/50"></div>
+                            <span class="text-xs uppercase tracking-[0.2em]">Discover the peaks</span>
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter text-white leading-[1.1]">
+                            Beyond the <br /> <span class="text-emerald-500/20">Horizon</span>
+                        </h2>
+                        <p class="text-lg text-neutral-400 leading-relaxed max-w-md">
+                            The hills are not silent; they whisper ancient stories to those who listen. 
+                            We curate expeditions for the bold, the curious, and the restless.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <button class="px-8 py-4 bg-white text-black font-bold text-xs tracking-[0.2em] hover:bg-neutral-200 transition-colors uppercase">
+                                Explore Map
+                            </button>
+                            <button class="px-8 py-4 border border-white/20 text-white font-bold text-xs tracking-[0.2em] hover:bg-white/5 transition-colors uppercase">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute -inset-4 border border-white/5 rounded-2xl z-0 transform rotate-2"></div>
+                        <div class="relative z-10 rounded-xl overflow-hidden h-[600px] bg-neutral-900 group">
+                            <img 
+                                src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop" 
+                                alt="Mountains"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                            />
+                            <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 to-transparent">
+                                <p class="text-white/80 font-mono text-xs">LOC: 45.92° N, 6.86° E</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Bento Grid Stats -->
+            <section class="py-24 border-y border-white/5 bg-[#050505]">
+                <div class="max-w-7xl mx-auto px-6 md:px-12">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+                        <div class="text-center md:text-left space-y-2">
+                            <p class="text-4xl md:text-5xl font-light tracking-tighter text-white">4,810m</p>
+                            <p class="text-xs uppercase tracking-widest text-neutral-500">Elevation</p>
+                        </div>
+                        <div class="text-center md:text-left space-y-2">
+                            <p class="text-4xl md:text-5xl font-light tracking-tighter text-white">142+</p>
+                            <p class="text-xs uppercase tracking-widest text-neutral-500">Routes</p>
+                        </div>
+                        <div class="text-center md:text-left space-y-2">
+                            <p class="text-4xl md:text-5xl font-light tracking-tighter text-white">50+</p>
+                            <p class="text-xs uppercase tracking-widest text-neutral-500">Guides</p>
+                        </div>
+                        <div class="text-center md:text-left space-y-2">
+                            <p class="text-4xl md:text-5xl font-light tracking-tighter text-white">2k+</p>
+                            <p class="text-xs uppercase tracking-widest text-neutral-500">Expeditions</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Gallery Grid -->
+            <section class="py-32 max-w-7xl mx-auto px-6 md:px-12">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                    <div>
+                        <h3 class="text-3xl md:text-4xl font-light tracking-tight text-white mb-4">Selected Expeditions</h3>
+                        <p class="text-neutral-500 max-w-sm">Curated journeys into the heart of the wild. Choose your path.</p>
+                    </div>
+                    <button class="text-xs font-bold uppercase tracking-widest text-white border-b border-white/30 pb-1 hover:border-white transition-colors">
+                        View All Archives
+                    </button>
+                </div>
+    
+                <div class="grid grid-cols-1 md:grid-cols-3 grid-rows-2 gap-4 md:h-[800px] h-auto">
+                    <!-- Large Item -->
+                    <div class="md:col-span-2 md:row-span-2 h-[400px] md:h-auto relative group overflow-hidden rounded-lg bg-neutral-900">
+                        <img 
+                            src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=2076&auto=format&fit=crop" 
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-70 group-hover:opacity-100"
+                            alt="Expedition 1"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                        <div class="absolute bottom-8 left-8">
+                            <span class="px-3 py-1 bg-white/10 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-white mb-4 inline-block">Featured</span>
+                            <h4 class="text-3xl font-bold text-white mb-2">The Northern Ridge</h4>
+                            <p class="text-neutral-300 text-sm">14 Days • Expert Level</p>
+                        </div>
+                    </div>
+    
+                    <!-- Small Item 1 -->
+                    <div class="relative h-[300px] md:h-auto group overflow-hidden rounded-lg bg-neutral-900">
+                        <img 
+                            src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop" 
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                            alt="Expedition 2"
+                        />
+                        <div class="absolute bottom-6 left-6 z-10">
+                            <h4 class="text-xl font-bold text-white">Alpine Lake</h4>
+                        </div>
+                    </div>
+    
+                    <!-- Small Item 2 -->
+                    <div class="relative h-[300px] md:h-auto group overflow-hidden rounded-lg bg-neutral-900">
+                        <img 
+                            src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?q=80&w=2076&auto=format&fit=crop" 
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                            alt="Expedition 3"
+                        />
+                        <div class="absolute bottom-6 left-6 z-10">
+                            <h4 class="text-xl font-bold text-white">Silent Valley</h4>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <!-- Footer -->
+            <footer class="py-24 border-t border-white/5 bg-[#050505] text-center overflow-hidden">
+                <h2 class="text-[15vw] md:text-[12vw] font-black text-neutral-900 tracking-tighter leading-none select-none">HILLS</h2>
+                <div class="flex justify-center gap-8 mt-12 text-xs uppercase tracking-widest text-neutral-500">
+                    <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">Email</a>
+                </div>
+                <p class="mt-8 text-neutral-700 text-xs">
+                    © 2025 Hills Project. All rights reserved.
+                </p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Configuration ---
+        const layersData = [
+            { src: 'https://i.ibb.co/9mHk68Gj/background.png', alt: 'background', speedX: 0.03, speedY: 0.038, speedZ: 0, rotation: 0, distance: -200, zIndex: 1, initialTop: 'calc(50% - 50px)', initialLeft: 'calc(50% + 0px)', width: '3200px' },
+            { src: 'https://i.ibb.co/DHhNwG0X/fog-7.png', alt: 'fog-7', speedX: 0.27, speedY: 0.32, speedZ: 0, rotation: 0, distance: 850, zIndex: 2, initialTop: 'calc(50% - 100px)', initialLeft: 'calc(50% + 300px)', width: '1900px' },
+            { src: 'https://i.ibb.co/4gT3LR9K/mountain-10.png', alt: 'mountain-10', speedX: 0.095, speedY: 0.005, speedZ: 0, rotation: 0, distance: 1110, zIndex: 3, initialTop: 'calc(50% + 169px)', initialLeft: 'calc(50% + 330px)', width: '1200px' },
+            { src: 'https://i.ibb.co/rW6cjXV/fog-6.png', alt: 'fog-6', speedX: 0.25, speedY: 0.28, speedZ: 0, rotation: 0, distance: 1400, zIndex: 4, initialTop: 'calc(50% + 285px)', initialLeft: 'calc(50%)', width: '2200px', className: 'opacity-30' },
+            { src: 'https://i.ibb.co/zHWDdxRR/mountain-9.png', alt: 'mountain-9', speedX: 0.125, speedY: 0.155, speedZ: 0.15, rotation: 0.02, distance: 1700, zIndex: 51, initialTop: 'calc(50% + 313px)', initialLeft: 'calc(50% - 557px)', width: '670px' },
+            { src: 'https://i.ibb.co/jFSMJ2t/fog-5.png', alt: 'fog-5', speedX: 0.16, speedY: 0.105, speedZ: 0, rotation: 0, distance: 1900, zIndex: 7, initialTop: 'calc(50% + 360px)', initialLeft: 'calc(50% + 40px)', width: '650px' },
+            { src: 'https://i.ibb.co/Fq5CHqZ6/mountain-7.png', alt: 'mountain-7', speedX: 0.1, speedY: 0.1, speedZ: 0, rotation: 0.09, distance: 2000, zIndex: 19, initialTop: 'calc(50% + 223px)', initialLeft: 'calc(50% + 495px)', width: '738px' },
+            { src: 'https://i.ibb.co/N2TjCDLQ/mountain-6.png', alt: 'mountain-6', speedX: 0.065, speedY: 0.05, speedZ: 0.05, rotation: 0.12, distance: 2300, zIndex: 18, initialTop: 'calc(50% + 120px)', initialLeft: 'calc(50% + 590px)', width: '408px' },
+            { src: 'https://i.ibb.co/23Xc3QwX/fog-4.png', alt: 'fog-4', speedX: 0.135, speedY: 0.1, speedZ: 0, rotation: 0, distance: 2400, zIndex: 11, initialTop: 'calc(50% + 223px)', initialLeft: 'calc(50% + 460px)', width: '590px', className: 'opacity-50' },
+            { src: 'https://i.ibb.co/SSfDbsF/mountain-5.png', alt: "mountain-5", speedX: 0.08, speedY: 0.05, speedZ: 0.13, rotation: 0.1, distance: 2550, zIndex: 12, initialTop: 'calc(50% + 320px)', initialLeft: 'calc(50% + 230px)', width: '725px' },
+            { src: 'https://i.ibb.co/chZkMKzX/fog-3.png', alt: 'fog-3', speedX: 0.11, speedY: 0.018, speedZ: 0, rotation: 0, distance: 2800, zIndex: 113, initialTop: 'calc(50% + 210px)', initialLeft: 'calc(50% + 5px)', width: '1600px' },
+            { src: 'https://i.ibb.co/39PKgGNS/mountain-4.png', alt: 'mountain-4', speedX: 0.059, speedY: 0.024, speedZ: 0.35, rotation: 0.14, distance: 3200, zIndex: 15, initialTop: 'calc(50% + 196px)', initialLeft: 'calc(50% - 698px)', width: '1100px' },
+            { src: 'https://i.ibb.co/rKHGSD9S/mountain-3.png', alt: 'mountain-3', speedX: 0.04, speedY: 0.018, speedZ: 0.32, rotation: 0.05, distance: 3400, zIndex: 20, initialTop: 'calc(50% - 20px)', initialLeft: 'calc(50% + 750px)', width: '630px' },
+            { src: 'https://i.ibb.co/bj0s7gRP/fog-2.png', alt: 'fog-2', speedX: 0.15, speedY: 0.0115, speedZ: 0, rotation: 0, distance: 3600, zIndex: 16, initialTop: 'calc(50% - 20px)', initialLeft: 'calc(50% + 698px)', width: '1100px' },
+            { src: 'https://i.ibb.co/7tHMfwZH/mountain-2.png', alt: 'mountain-2', speedX: 0.0235, speedY: 0.013, speedZ: 0.42, rotation: 0.15, distance: 3800, zIndex: 17, initialTop: 'calc(50% + 256px)', initialLeft: 'calc(50% + 528px)', width: '800px' },
+            { src: 'https://i.ibb.co/Knh5tBS/mountain-1.png', alt: 'mountain-1', speedX: 0.027, speedY: 0.018, speedZ: 0.53, rotation: 0.2, distance: 4000, zIndex: 18, initialTop: 'calc(50% + 196px)', initialLeft: 'calc(50% - 728px)', width: '1100px' },
+            { src: 'https://i.ibb.co/Y41vTxSN/fog-1.png', alt: 'fog-1', speedX: 0.12, speedY: 0.01, speedZ: 0, rotation: 0, distance: 4200, zIndex: 21, initialTop: 'calc(100% - 355px)', initialLeft: 'calc(50% + 100px)', width: "1900px", className: "opacity-50" },
+        ];
+
+        // --- DOM Elements ---
+        const layersContainer = document.getElementById('layers-container');
+        const textRef = document.getElementById('hero-text');
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('main-content');
+
+        // Store references to the created image elements
+        const layerElements = [];
+
+        // --- Initialization ---
+        function init() {
+            // Create DOM elements for layers
+            layersData.forEach((layer, index) => {
+                const img = document.createElement('img');
+                img.src = layer.src;
+                img.alt = layer.alt;
+                
+                // Add classes
+                img.className = `parallax-layer absolute pointer-events-none transition-transform duration-[450ms] ease-out ${layer.className || ''}`;
+                
+                // Add styles
+                img.style.width = layer.width;
+                img.style.top = layer.initialTop;
+                img.style.left = layer.initialLeft;
+                img.style.zIndex = layer.zIndex;
+                img.style.transform = 'translate(-50%, -50%)'; // Initial Center
+
+                layersContainer.appendChild(img);
+                layerElements.push({ element: img, data: layer });
+            });
+
+            // Start Preloader
+            preloadImages();
+
+            // Add Event Listener
+            window.addEventListener('mousemove', handleMouseMove);
+        }
+
+        // --- Logic ---
+        function handleMouseMove(e) {
+            const xValue = e.clientX - window.innerWidth / 2;
+            const yValue = e.clientY - window.innerHeight / 2;
+            const rotateDegree = (xValue / (window.innerWidth / 2)) * 20;
+
+            updateLayers(e.clientX, xValue, yValue, rotateDegree);
+        }
+
+        function updateLayers(cursorPosition, xVal, yVal, rotateDeg) {
+            // Update Background Layers
+            layerElements.forEach((item) => {
+                const { element, data } = item;
+                const { speedX, speedY, speedZ, rotation } = data;
+
+                // Helper to get Left value from style string "calc(50% + 100px)" or computed style
+                // For simplified Parallax, we rely on `element.offsetLeft` which is the rendered position.
+                // However, the original React logic grabbed the computed 'left' which is tricky with 'calc'.
+                // A robust approximation is using the window center vs the element's configured center.
+                // But to strictly match the React logic: 
+                // We will use `element.getBoundingClientRect().left` + width/2 relative to viewport? 
+                // Actually the React code used `getComputedStyle(el).left`. Let's assume standard positioning.
+                // Since the elements are `position: absolute`, `left` is retrievable.
+                
+                // PERFORMANCE NOTE: calling getComputedStyle in a mousemove handler is slow.
+                // Ideally we'd cache this. For this demo, we'll try to do it efficiently.
+                
+                let computedLeft = element.getBoundingClientRect().left + (element.offsetWidth / 2);
+                
+                const isInLeft = computedLeft < window.innerWidth / 2 ? 1 : -1;
+                const zValue = (cursorPosition - computedLeft) * isInLeft * 0.1;
+
+                element.style.transform = `perspective(2300px) translateZ(${zValue * speedZ}px) rotateY(${rotateDeg * rotation}deg) translateX(calc(-50% + ${-xVal * speedX}px)) translateY(calc(-50% + ${yVal * speedY}px))`;
+            });
+
+            // Update Text Layer
+            if (textRef) {
+                const textSpeedX = 0.07;
+                const textSpeedY = 0.05;
+                const textSpeedZ = 0.08;
+                const textRotation = 0.04;
+
+                let computedLeft = textRef.getBoundingClientRect().left + (textRef.offsetWidth / 2);
+                const isInLeft = computedLeft < window.innerWidth / 2 ? 1 : -1;
+                const zValue = (cursorPosition - computedLeft) * isInLeft * 0.1;
+
+                textRef.style.transform = `perspective(2300px) translateZ(${zValue * textSpeedZ}px) rotateY(${rotateDeg * textRotation}deg) translateX(calc(-50% + ${-xVal * textSpeedX}px)) translateY(calc(-50% + ${yVal * textSpeedY}px))`;
+            }
+        }
+
+        async function preloadImages() {
+            const promises = layersData.map((layer) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = layer.src;
+                    img.onload = resolve;
+                    img.onerror = resolve; // Continue on error
+                });
+            });
+
+            await Promise.all(promises);
+
+            // Artificial delay for smooth experience
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.pointerEvents = 'none';
+                mainContent.style.opacity = '1';
+            }, 800);
+        }
+
+        // Run Init
+        init();
+
+    </script>
+</body>
+</html>
